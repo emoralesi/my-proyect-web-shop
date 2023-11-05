@@ -1,0 +1,10 @@
+.menuButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.menuSearch {
+   padding: 8px;
+}
