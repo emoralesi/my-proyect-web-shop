@@ -1,7 +1,8 @@
 import { ExpandLess, ExpandMore } from "@mui/icons-material"
 import { Collapse, Divider, ListItem, ListItemText } from "@mui/material"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import CollapseContent from "./CollapseContent"
+import { FiltroSelectedContext } from "../../Contexts/FiltroSelectedContext";
 
 export default function ExpandListFilter({ dataAll, value }) {
 

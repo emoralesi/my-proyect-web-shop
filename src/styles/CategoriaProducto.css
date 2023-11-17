@@ -9,7 +9,7 @@
 .gridProductos ul {
     display: grid;
     grid-template-columns: repeat(auto-fit,
-            minmax(30%, max-content));
+            minmax(30%, 30%));
     gap: 1rem;
     padding-right: 40px;
     width: 100%;
@@ -27,6 +27,19 @@
     width: 100%;
     color: transparent;
     transition: color 0.3s ease;
+
+}
+
+.gridProductos ul h4 {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    font-size: 20px;
+    justify-content: center;
+    padding-top: 20px;
+    width: 100%;
+    color: #b12e2e;
 
 }
 

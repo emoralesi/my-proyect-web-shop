@@ -2,10 +2,13 @@ import { Checkbox, List, ListItem, ListItemIcon, ListItemText } from "@mui/mater
 import React, { useContext } from "react";
 import { FiltroSelectedContext } from "../../Contexts/FiltroSelectedContext";
 
-export default function CheckedFilter({ value, nombre, chipList, setChipList, checked, setChecked }) {
-    const isChecked = checked[value.nombre_producto_categoria_filtro] || false;
+export default function CheckedFilter({ value, nombre }) {
 
-    const { dataFilter, setDataFilter } = useContext(FiltroSelectedContext)
+    const { dataFilter, setDataFilter, chipList, setChipList, checked, setChecked } = useContext(FiltroSelectedContext);
+
+    console.log("mi checked", checked);
+
+    const isChecked = checked?.filter(values => values.origen == nombre && values.nombre == value.nombre_producto_categoria_filtro)[0]?.valor || false;
 
     return (
         <List component="li" disablePadding>
@@ -18,9 +21,21 @@ export default function CheckedFilter({ value, nombre, chipList, setChipList, ch
                         disableRipple
                         value={value.nombre_producto_categoria_filtro}
                         onChange={(e) => {
-                            const updatedChecked = { ...checked };
-                            updatedChecked[value.nombre_producto_categoria_filtro] = !isChecked;
-                            setChecked(updatedChecked);
+
+                            if (checked.filter(values => values.origen == nombre && values.nombre == value.nombre_producto_categoria_filtro).length > 0) {
+
+                                const copiaChecked = [...checked]
+                                copiaChecked.filter(values => values.origen == nombre && values.nombre == value.nombre_producto_categoria_filtro)[0].valor = e.target.checked
+
+                                setChecked(copiaChecked);
+                            } else {
+                                let dataChecked = {
+                                    "nombre": value.nombre_producto_categoria_filtro,
+                                    "origen": nombre,
+                                    "valor": e.target.checked
+                                }
+                                setChecked((prevListChecked) => [...prevListChecked, dataChecked]);
+                            }
 
                             let data = {
                                 filtro: nombre,

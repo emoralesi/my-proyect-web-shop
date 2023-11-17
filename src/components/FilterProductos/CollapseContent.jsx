@@ -4,10 +4,8 @@ import CheckedFilter from "./CheckedFilter";
 import { FiltroSelectedContext } from "../../Contexts/FiltroSelectedContext";
 
 export default function CollapseContent({ data, value }) {
-    const [chipList, setChipList] = useState([]);
-    const [checked, setChecked] = useState({});
 
-    const {dataFilter, setDataFilter} = useContext(FiltroSelectedContext);
+    const { dataFilter, setDataFilter, chipList, setChipList, checked, setChecked } = useContext(FiltroSelectedContext);
 
     const handleChipDelete = (filtro, valor) => {
         setChipList((prevChipList) => {
@@ -26,10 +24,13 @@ export default function CollapseContent({ data, value }) {
             return newFilterList;
         });
 
-        // Cambiar el estado checked correspondiente
-        const updatedChecked = { ...checked };
-        updatedChecked[valor] = false;
-        setChecked(updatedChecked);
+        console.log("filtro", filtro);
+        console.log("valor", valor);
+
+        const copiaChecked = [...checked]
+        copiaChecked.filter(values => values.origen == filtro && values.nombre == valor)[0].valor = false
+
+        setChecked(copiaChecked);
     };
 
     return (
@@ -37,8 +38,8 @@ export default function CollapseContent({ data, value }) {
             <ListItem>
                 <div style={{ border: 'solid 0.5px', minHeight: '60px', width: '100%', padding: 5 }}>
                     {
-                        chipList.length > 0 ?
-                            chipList.map((chip, index) => (
+                        chipList.filter(values => values.filtro == value).length > 0 ?
+                            chipList.filter(values => values.filtro == value).map((chip, index) => (
                                 <Chip
                                     key={index}
                                     color="success"
@@ -57,10 +58,6 @@ export default function CollapseContent({ data, value }) {
                     key={value2.nombre_producto_categoria_filtro}
                     value={value2}
                     nombre={value}
-                    chipList={chipList}
-                    setChipList={setChipList}
-                    checked={checked}
-                    setChecked={setChecked}
                 />
             ))}
         </>
